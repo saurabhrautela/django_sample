@@ -1,0 +1,22 @@
+version: '3.5'
+
+services:
+    django_boilerplate_migration:
+        build: .
+        # image: app_django_boilerplate
+        environment:
+            - APP_ENVIRONMENT=staging
+            - SECRET_KEY_VALUE=bDf%Ma*y8HX6S2zZVMP37bbWc^zLT#jwDTFMP7hZFZvWczeD5@
+            - DEBUG_VALUE=true
+            - ALLOWED_HOSTS_VALUE=*
+            - DATABASE_NAME_VALUE=django_boilerplate
+            - DATABASE_USER_VALUE=postgres-admin
+            - DATABASE_PASSWORD_VALUE=j*B&72_#AX_wj8*MgY=j!4u=^b?M*Mwtu@%K
+            - DATABASE_HOSTNAME_VALUE=db
+            - DATABASE_PORT_VALUE=5432
+        entrypoint: /app/tools/docker/migration_entrypoint.sh
+        networks:
+            - internal_db
+
+networks:
+    internal_db:
