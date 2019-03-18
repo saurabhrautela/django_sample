@@ -2,21 +2,35 @@ version: '3.5'
 
 services:
     django_boilerplate_migration:
-        build: .
-        # image: app_django_boilerplate
+        image: 192.168.0.121:5555/django_swarm
         environment:
             - APP_ENVIRONMENT=staging
             - SECRET_KEY_VALUE=bDf%Ma*y8HX6S2zZVMP37bbWc^zLT#jwDTFMP7hZFZvWczeD5@
             - DEBUG_VALUE=true
             - ALLOWED_HOSTS_VALUE=*
             - DATABASE_NAME_VALUE=django_boilerplate
-            - DATABASE_USER_VALUE=postgres-admin
-            - DATABASE_PASSWORD_VALUE=j*B&72_#AX_wj8*MgY=j!4u=^b?M*Mwtu@%K
+            - DATABASE_USER_FILE=/run/secrets/pdb_username
+            - DATABASE_PASSWORD_FILE=/run/secrets/pdb_password
             - DATABASE_HOSTNAME_VALUE=db
             - DATABASE_PORT_VALUE=5432
+        secrets:
+            - pdb_username
+            - pdb_password
         entrypoint: /app/tools/docker/migration_entrypoint.sh
         networks:
             - internal_db
+        deploy:
+            mode: replicated
+            replicas: 1
+            placement:
+                constraints:
+                    - node.hostname == app
 
 networks:
     internal_db:
+
+secrets:
+    pdb_password:
+      external: true
+    pdb_username:
+      external: true

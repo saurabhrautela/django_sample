@@ -2,50 +2,72 @@ version: '3.5'
 
 services:
     django_boilerplate: 
-        build: .
-        # image: app_django_boilerplate
+        image: 192.168.0.121:5555/django_swarm
+        ports:
+            - 8000:8000
         environment:
             - APP_ENVIRONMENT=staging
             - SECRET_KEY_VALUE=bDf%Ma*y8HX6S2zZVMP37bbWc^zLT#jwDTFMP7hZFZvWczeD5@
             - DEBUG_VALUE=true
             - ALLOWED_HOSTS_VALUE=*
             - DATABASE_NAME_VALUE=django_boilerplate
-            - DATABASE_USER_VALUE=postgres-admin
-            - DATABASE_PASSWORD_VALUE=j*B&72_#AX_wj8*MgY=j!4u=^b?M*Mwtu@%K
+            - DATABASE_USER_FILE=/run/secrets/pdb_username
+            - DATABASE_PASSWORD_FILE=/run/secrets/pdb_password
             - DATABASE_HOSTNAME_VALUE=db
             - DATABASE_PORT_VALUE=5432
-        restart: unless-stopped
+        secrets:
+            - pdb_password
+            - pdb_username
         depends_on:
             - db
         networks:
             - internal_db
             - reverse_proxy
+        deploy:
+            mode: replicated
+            replicas: 1
+            placement:
+                constraints:
+                    - node.hostname == app
 
     db:
         image: postgres:11.1
         environment:
-            - POSTGRES_USER=postgres-admin
-            - POSTGRES_PASSWORD=j*B&72_#AX_wj8*MgY=j!4u=^b?M*Mwtu@%K
+            - POSTGRES_USER_FILE=/run/secrets/pdb_username
+            - POSTGRES_PASSWORD_FILE=/run/secrets/pdb_password
             - POSTGRES_DB=django_boilerplate
+        secrets:
+            - pdb_password
+            - pdb_username
         volumes:
             - db-data:/var/lib/postgresql/data
-        restart: unless-stopped
         networks:
             - internal_db
+        deploy:
+            mode: replicated
+            replicas: 1
+            placement:
+                constraints:
+                    - node.hostname == app
 
     reverseproxy:
         image: nginx:1.15-alpine
-        restart: unless-stopped
         ports:
             - 80:80
             - 443:443
         volumes:
-            - /app/tools/ssl:/etc/ssl
-            - /app/tools/nginx/nginx.conf:/etc/nginx/nginx.conf
+            - ./tools/ssl:/etc/ssl
+            - ./tools/nginx/nginx.conf:/etc/nginx/nginx.conf
         depends_on:
             - django_boilerplate
         networks:
             - reverse_proxy
+        deploy:
+            mode: replicated
+            replicas: 1
+            placement:
+                constraints:
+                    - node.hostname == app
 
 volumes:
     db-data:
@@ -53,3 +75,9 @@ volumes:
 networks:
     internal_db:
     reverse_proxy:
+
+secrets:
+    pdb_password:
+      external: true
+    pdb_username:
+      external: true
