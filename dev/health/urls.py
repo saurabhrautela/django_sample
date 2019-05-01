@@ -6,6 +6,4 @@ router = routers.DefaultRouter()
 
 urlpatterns = router.urls
 
-urlpatterns += {
-    url(r'^health/', HealthView.as_view(), name='health_check')
-}
+urlpatterns += {url(r"^health/", HealthView.as_view(), name="health_check")}

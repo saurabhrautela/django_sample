@@ -1,0 +1,16 @@
+version: '3.5'
+
+services:
+    registry:
+        image: registry:2
+        environment:
+            - REGISTRY_HTTP_ADDR=0.0.0.0:443
+            - REGISTRY_HTTP_TLS_CERTIFICATE=/run/secrets/domain.key
+            - REGISTRY_HTTP_TLS_KEY=/run/secrets/domain.key
+        restart: unless-stopped
+        ports:
+            - 5555:5000
+        secrets:
+            - registry_cert
+            - registry-key
+

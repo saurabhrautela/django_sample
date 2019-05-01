@@ -1,0 +1,18 @@
+version: '3.5'
+
+services:
+    db-dev:
+        image: postgres:11.1
+        ports:
+            - 5433:5432
+        environment:
+            - POSTGRES_USER=postgres-admin
+            - POSTGRES_PASSWORD=password123
+            - POSTGRES_DB=django_sample
+        volumes:
+            - db-data-dev:/var/lib/postgresql/data
+        restart: unless-stopped
+
+volumes:
+    db-data-dev:
+
