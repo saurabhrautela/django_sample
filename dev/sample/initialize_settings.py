@@ -41,5 +41,5 @@ except:
         env = os.environ["APP_ENVIRONMENT"].lower()
         raise
     except:
-        if env == "production" or env == "staging":
+        if env != "development":
             raise

@@ -1,2 +1,2 @@
-from .person import *
+from .test_models import *
 from .hello import *

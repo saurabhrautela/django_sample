@@ -5,13 +5,13 @@ verify_ssl = true
 
 [dev-packages]
 pylint = "*"
+coverage = "==4.5.3"
 
 [packages]
-django = "==2.1.6"
+django = "==2.2"
 psycopg2 = "==2.8.2"
-djangorestframework = "==3.9.0"
+djangorestframework = "==3.9.3"
 gunicorn = "==19.9.0"
-coverage = "==4.5.3"
 
 [requires]
 python_version = "3.7"
