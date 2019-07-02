@@ -3,24 +3,8 @@ from rest_framework.decorators import api_view
 from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework import status
-from .serializer import HelloWorldSerializer, PersonSerializer, MathOperationSerializer
+from .serializer import HelloWorldSerializer, PersonSerializer
 from .models import Person
-import math
-
-
-class MathOperationsView(APIView):
-    def get(self, request):
-        return Response({"allowed_operations": ["factorial"]})
-
-    def post(self, request):
-        serializer = MathOperationSerializer(data=request.data)
-        if serializer.is_valid():
-            valid_data = serializer.data
-            if valid_data.get("operation").lower() == "factorial":
-                math.factorial(int(valid_data.get("data")))
-                return Response()
-        else:
-            return Response({"error": serializer.errors})
 
 
 """

@@ -5,7 +5,6 @@ from api.views import (
     NamasteVishwaKaDrishya,
     HelloWorldView,
     PersonView,
-    MathOperationsView,
 )
 
 router = routers.DefaultRouter()
@@ -17,5 +16,4 @@ urlpatterns += {
     url(r"^namaste", NamasteVishwaKaDrishya.as_view(), name="namaste_vishwa"),
     url(r"^hello", HelloWorldView.as_view(), name="hello_world"),
     url(r"^person", PersonView.as_view(), name="person"),
-    url(r"^math", MathOperationsView.as_view(), name="math_operation"),
 }

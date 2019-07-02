@@ -1,13 +1,14 @@
 import datetime
 from ..models import Person
 from django.test import TestCase
+from typing import List
 
 
 class PersonModelTest(TestCase):
     """Tests for api.models.Person."""
 
     def setUp(self) -> None:
-        self.test_data: list = [
+        self.test_data: List[dict] = [
             {
                 "name": "sanjeev",
                 "dob": datetime.date(2001, 9, 16),
@@ -22,10 +23,10 @@ class PersonModelTest(TestCase):
             },
         ]
 
-    def test_person(self):
+    def test_person(self) -> None:
         """Test to check if person unicode value."""
         for person_data in self.test_data:
-            person = PersonModelTest._create_person(person_data)
+            person: Person = PersonModelTest._create_person(person_data)
 
             assert person.name == person_data.get("name")
             assert person.dob == person_data.get("dob")

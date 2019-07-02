@@ -16,7 +16,7 @@ services:
         secrets:
             - pdb_username
             - pdb_password
-        entrypoint: /app/tools/docker/migration_entrypoint.sh
+        entrypoint: /app/config/docker/migration_entrypoint.sh
         networks:
             - internal_db
         deploy:
