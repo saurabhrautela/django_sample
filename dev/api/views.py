@@ -83,12 +83,6 @@ class HelloWorldView(APIView):
                 {"errors": serializer.errors}, status=status.HTTP_400_BAD_REQUEST
             )
 
-        if not name:
-            return Response(
-                {"error": "Name missing"}, status=status.HTTP_400_BAD_REQUEST
-            )
-        return Response({"message": "Hello {}! How are you?".format(name)})
-
 
 """
 Django API creation method 4:
