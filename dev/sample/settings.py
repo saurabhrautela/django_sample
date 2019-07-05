@@ -43,7 +43,9 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "rest_framework",
+    "rest_framework.authtoken",
     "api",
+    "profiles",
 ]
 
 MIDDLEWARE = [
@@ -91,6 +93,8 @@ DATABASES = {
     }
 }
 
+# Define user model to be used for authentication
+AUTH_USER_MODEL = 'profiles.UserProfile'
 
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
