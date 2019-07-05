@@ -10,7 +10,7 @@ black = "==19.3b0"
 pygments = "*"
 
 [packages]
-django = "==2.2.2"
+django = "==2.2.3"
 psycopg2 = "==2.8.2"
 djangorestframework = "==3.9.3"
 gunicorn = "==19.9.0"
