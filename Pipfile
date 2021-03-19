@@ -14,7 +14,7 @@ markdown = "*"
 [packages]
 django = "==2.2.13"
 psycopg2 = "==2.8.2"
-djangorestframework = "==3.9.3"
+djangorestframework = "==3.11.2"
 gunicorn = "==19.9.0"
 
 [requires]
